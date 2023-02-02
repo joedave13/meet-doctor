@@ -11,4 +11,9 @@ class UserType extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name'];
+
+    public function userDetails()
+    {
+        return $this->hasOne(UserDetail::class);
+    }
 }
