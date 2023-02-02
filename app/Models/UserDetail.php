@@ -17,7 +17,7 @@ class UserDetail extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function userType()
+    public function user_type()
     {
         return $this->belongsTo(UserType::class);
     }
