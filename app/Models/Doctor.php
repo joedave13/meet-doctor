@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Specialist extends Model
+class Doctor extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['specialist_id', 'name', 'fee', 'picture'];
 
-    public function doctors()
+    public function specialist()
     {
-        return $this->hasMany(Doctor::class);
+        return $this->belongsTo(Specialist::class);
     }
 }
