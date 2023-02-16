@@ -12,7 +12,7 @@ class UserType extends Model
 
     protected $fillable = ['name'];
 
-    public function user_details()
+    public function user_detail()
     {
         return $this->hasOne(UserDetail::class);
     }
