@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Frontsite\AppointmentController;
+use App\Http\Controllers\Frontsite\LandingController;
+use App\Http\Controllers\Frontsite\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Frontsite Routes 
+Route::get('/', [LandingController::class, 'index']);
+Route::get('/appointment', [AppointmentController::class, 'index']);
+Route::get('/payment', [PaymentController::class, 'index']);
+Route::view('/register-success', 'pages.frontsite.success.register-success');
+Route::view('/payment-success', 'pages.frontsite.success.payment-success');
 
 Route::middleware([
     'auth:sanctum',
