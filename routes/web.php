@@ -18,17 +18,23 @@ use Illuminate\Support\Facades\Route;
 
 // Frontsite Routes 
 Route::get('/', [LandingController::class, 'index']);
-Route::get('/appointment', [AppointmentController::class, 'index']);
-Route::get('/payment', [PaymentController::class, 'index']);
-Route::view('/register-success', 'pages.frontsite.success.register-success');
-Route::view('/payment-success', 'pages.frontsite.success.payment-success');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/appointment', [AppointmentController::class, 'index']);
+    Route::get('/payment', [PaymentController::class, 'index']);
+    Route::view('/register-success', 'pages.frontsite.success.register-success');
+    Route::view('/payment-success', 'pages.frontsite.success.payment-success');
+});
+// End Frontsite Routes
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // Backsite Routes
+    Route::prefix('backsite')->name('backsite.')->middleware(['auth'])->group(function () {
+        # code...
+    });
+    // End Backsite Routes
 });
