@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backsite\Specialist;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSpecialistRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class UpdateSpecialistRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255']
+            'name' => ['required', 'string', 'max:255', Rule::unique('specialists')->ignore($this->specialist)]
         ];
     }
 }

@@ -25,7 +25,7 @@ class UpdateConsultationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', Rule::unique('consultations')->ignore($this->consultation)],
             'level' => ['required', 'integer', Rule::in([1, 2, 3])],
             'fee' => ['required', 'integer']
         ];
