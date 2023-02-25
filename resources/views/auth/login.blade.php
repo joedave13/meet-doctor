@@ -26,7 +26,7 @@
                         <label class="block">
                             <input type="email" name="email"
                                 class="block w-full rounded-full py-4 text-[#1E2B4F] font-medium placeholder:text-[#AFAEC3] placeholder:font-normal px-7 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
-                                placeholder="Email Address" value="{{ old('email') }}" />
+                                placeholder="Email Address" value="{{ old('email') }}" autofocus />
 
                             @error('email')
                             <small style="color: rgb(185 28 28);">{{ $message }}</small>

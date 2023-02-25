@@ -26,7 +26,7 @@
                         <label class="block">
                             <input type="text" name="name"
                                 class="block w-full rounded-full py-4 text-[#1E2B4F] font-medium placeholder:text-[#AFAEC3] placeholder:font-normal px-7 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
-                                placeholder="Full Name" value="{{ old('name') }}" />
+                                placeholder="Full Name" value="{{ old('name') }}" autofocus />
 
                             @error('name')
                             <small class="mt-0" style="color: rgb(220 38 38);">{{ $message }}</small>
