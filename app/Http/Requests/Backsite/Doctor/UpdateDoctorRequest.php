@@ -24,7 +24,10 @@ class UpdateDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'specialist_id' => ['required', 'integer', 'exists:specialists,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'fee' => ['required', 'integer'],
+            'photo' => ['nullable', 'file', 'image']
         ];
     }
 }
