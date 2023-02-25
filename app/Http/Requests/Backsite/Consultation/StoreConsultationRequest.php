@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backsite\Consultation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreConsultationRequest extends FormRequest
 {
@@ -24,7 +25,9 @@ class StoreConsultationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'level' => ['required', 'integer', Rule::in([1, 2, 3])],
+            'fee' => ['required', 'integer']
         ];
     }
 }
