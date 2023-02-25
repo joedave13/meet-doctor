@@ -10,7 +10,7 @@ class UserDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'user_type_id', 'contact', 'address', 'photo'];
+    protected $fillable = ['user_id', 'user_type_id', 'age', 'contact', 'address', 'photo'];
 
     public function user()
     {
