@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backsite\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRoleRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class UpdateRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255']
+            'name' => ['required', 'string', 'max:255', Rule::unique('roles')->ignore($this->role)]
         ];
     }
 }
