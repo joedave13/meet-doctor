@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LandingController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/appointment', [AppointmentController::class, 'index']);
+    Route::get('/appointment/{doctor}', [AppointmentController::class, 'index'])->name('appointment');
     Route::get('/payment', [PaymentController::class, 'index']);
     Route::view('/register-success', 'pages.frontsite.success.register-success');
     Route::view('/payment-success', 'pages.frontsite.success.payment-success');
