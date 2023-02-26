@@ -66,7 +66,7 @@
                             <div class="text-right mr-5">
                                 <div class="text-base font-medium text-[#1E2B4F]">Hi, {{ auth()->user()->name }}</div>
                                 <div class="text-sm text-[#AFAEC3]">
-                                    Pasien
+                                    {{ auth()->user()->user_detail->user_type->name }}
                                 </div>
                             </div>
                             <img class="h-12 w-12 rounded-full ring-1 ring-offset-4 ring-[#0D63F3]"
@@ -171,7 +171,7 @@
                 <div class="ml-3">
                     <div class="text-base font-medium text-[#1E2B4F]">Hi, {{ auth()->user()->name }}</div>
                     <div class="text-sm text-[#AFAEC3]">
-                        Pasien
+                        {{ auth()->user()->user_detail->user_type->name }}
                     </div>
                 </div>
             </div>
