@@ -15,7 +15,7 @@
                 <br />
                 dalam berkonsultasi
             </p>
-            <a href="authenticated.html" class="inline-block mt-10 bg-[#0D63F3] text-white rounded-full px-14 py-3">
+            <a href="/" class="inline-block mt-10 bg-[#0D63F3] text-white rounded-full px-14 py-3">
                 Home
             </a>
         </div>

@@ -18,11 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 // Frontsite Routes 
 Route::get('/', [LandingController::class, 'index']);
+Route::view('/register-success', 'pages.frontsite.success.register-success');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/appointment/{id}', [AppointmentController::class, 'index'])->name('appointment');
     Route::get('/payment', [PaymentController::class, 'index']);
-    Route::view('/register-success', 'pages.frontsite.success.register-success');
     Route::view('/payment-success', 'pages.frontsite.success.payment-success');
 });
 // End Frontsite Routes
