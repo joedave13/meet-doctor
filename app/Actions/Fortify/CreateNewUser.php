@@ -29,12 +29,6 @@ class CreateNewUser implements CreatesNewUsers
             'age' => ['required', 'integer', 'min:0']
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-        ]);
-
         return DB::transaction(function () use ($input) {
             return tap(User::query()->create([
                 'name' => $input['name'],
