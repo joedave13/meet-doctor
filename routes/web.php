@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backsite\UserController;
 use App\Http\Controllers\Backsite\UserTypeController;
 use App\Http\Controllers\Frontsite\AppointmentController;
 use App\Http\Controllers\Frontsite\LandingController;
@@ -37,6 +38,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::prefix('backsite')->name('backsite.')->middleware(['auth'])->group(function () {
         Route::prefix('management-access')->group(function () {
             Route::resource('user-type', UserTypeController::class)->only(['index']);
+            Route::resource('user', UserController::class);
         });
     });
     // End Backsite Routes

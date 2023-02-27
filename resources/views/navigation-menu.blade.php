@@ -18,7 +18,7 @@
                     <x-nav-link-parent :href="'#'" :active="request()->is('backsite/management-access*')">
                         <x-slot name="name">Management Access</x-slot>
                         <x-slot name="children">
-                            <a href="#">User</a>
+                            <a href="{{ route('backsite.user.index') }}">User</a>
                             <a href="{{ route('backsite.user-type.index') }}">User Type</a>
                             <a href="#">Permission</a>
                             <a href="#">Role</a>
@@ -163,7 +163,7 @@
             <x-responsive-nav-link-parent :href="'#'" :active="request()->is('backsite/management-access*')">
                 <x-slot name="name">Management Access</x-slot>
                 <x-slot name="children">
-                    <a href="#">User</a>
+                    <a href="{{ route('backsite.user.index') }}">User</a>
                     <a href="{{ route('backsite.user-type.index') }}">User Type</a>
                     <a href="#">Permission</a>
                     <a href="#">Role</a>
