@@ -15,15 +15,13 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-nav-link-parent :href="'#'" :active="request()->routeIs('padron.*')">
-                        <x-slot name="name">Option A</x-slot>
+                    <x-nav-link-parent :href="'#'" :active="request()->is('backsite/management-access*')">
+                        <x-slot name="name">Management Access</x-slot>
                         <x-slot name="children">
-                            <a href="#">Item A</a>
-                            <span class="separator"></span>
-                            <a href="#">Item B</a>
-                            <a href="#">Item C</a>
-                            <span class="separator"></span>
-                            <a href="#">Item D</a>
+                            <a href="#">User</a>
+                            <a href="{{ route('backsite.user-type.index') }}">User Type</a>
+                            <a href="#">Permission</a>
+                            <a href="#">Role</a>
                         </x-slot>
                     </x-nav-link-parent>
                 </div>
@@ -162,15 +160,13 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-responsive-nav-link-parent :href="'#'" :active="request()->routeIs('padron.*')">
-                <x-slot name="name">Padrón</x-slot>
+            <x-responsive-nav-link-parent :href="'#'" :active="request()->is('backsite/management-access*')">
+                <x-slot name="name">Management Access</x-slot>
                 <x-slot name="children">
-                    <a href="#">Buscador</a>
-                    <span class="separator"></span>
-                    <a href="#">Centros de votacion</a>
-                    <a href="#">Juntas</a>
-                    <span class="separator"></span>
-                    <a href="#">Cartografia</a>
+                    <a href="#">User</a>
+                    <a href="{{ route('backsite.user-type.index') }}">User Type</a>
+                    <a href="#">Permission</a>
+                    <a href="#">Role</a>
                 </x-slot>
             </x-responsive-nav-link-parent>
         </div>
