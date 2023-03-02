@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $users = User::with(['user_detail', 'user_detail.user_type', 'roles']);
+            $users = User::with(['user_detail', 'user_detail.user_type', 'roles'])->orderBy('name', 'asc');
 
             return datatables()
                 ->eloquent($users)
