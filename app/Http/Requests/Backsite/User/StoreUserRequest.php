@@ -27,7 +27,13 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')],
-            'password' => ['required', 'string', 'max:255']
+            'password' => ['required', 'string', 'max:255'],
+            'user_type_id' => ['required', 'integer', 'exists:user_types,id'],
+            'age' => ['nullable', 'integer'],
+            'contact' => ['nullable', 'string', 'max:16'],
+            'address' => ['nullable'],
+            'photo' => ['nullable', 'file', 'image'],
+            'role_id' => ['required', 'integer', 'exists:roles,id']
         ];
     }
 }

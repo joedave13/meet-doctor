@@ -7,6 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mb-10">
+                <a href="{{ route('backsite.user.create') }}"
+                    class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline">
+                    <i class="fas fa-fw fa-plus mr-2"></i>Add New User
+                </a>
+            </div>
+
             <div class="shadow overflow-hidden sm-rounded-md">
                 <div class="px-4 py-5 bg-white sm:p-6">
                     <table id="user-table">
@@ -16,6 +23,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Type</th>
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -55,6 +63,10 @@
                         name: 'user_detail.user_type.name'
                     },
                     {
+                        data: 'roles',
+                        name: 'roles'
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -64,7 +76,7 @@
                 ],
                 columnDefs: [
                     {
-                        "targets": [0, 4],
+                        "targets": [0, 3, 4, 5],
                         "className": "text-center"
                     }
                 ]
