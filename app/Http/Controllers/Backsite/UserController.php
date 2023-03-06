@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backsite\User\StoreUserRequest;
+use App\Http\Requests\Backsite\User\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserDetail;
@@ -11,6 +12,7 @@ use App\Models\UserType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -106,9 +108,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $userTypes = UserType::all();
+        $roles = Role::all();
+
+        return view('pages.backsite.user.edit', compact('user', 'userTypes', 'roles'));
     }
 
     /**
@@ -118,9 +123,41 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $userData = $request->only(['name', 'email']);
+
+            if ($request->has('password')) {
+                $userData['password'] = Hash::make($request->password);
+            }
+
+            $user->update($userData);
+
+            $userDetailData = $request->only(['user_type_id', 'age', 'contact', 'address']);
+
+            if ($request->has('photo')) {
+                if ($user->user_detail->photo && Storage::disk('public')->exists($user->user_detail->photo)) {
+                    Storage::disk('public')->delete($user->user_detail->photo);
+                }
+
+                $userDetailData['photo'] = $request->file('photo')->store('user/photo', 'public');
+            }
+
+            $user->user_detail->update($userDetailData);
+
+            $user->roles()->sync($request->role_id);
+
+            DB::commit();
+
+            return redirect()->route('backsite.user.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return $th->getMessage();
+        }
     }
 
     /**
