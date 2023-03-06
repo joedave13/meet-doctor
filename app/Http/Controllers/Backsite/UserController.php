@@ -83,11 +83,15 @@ class UserController extends Controller
 
             DB::commit();
 
+            toast('User created successfully!', 'success');
+
             return redirect()->route('backsite.user.index');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            return $th->getMessage();
+            toast($th->getMessage(), 'error');
+
+            return redirect()->back();
         }
     }
 
@@ -152,11 +156,15 @@ class UserController extends Controller
 
             DB::commit();
 
+            toast('User updated successfully!', 'success');
+
             return redirect()->route('backsite.user.index');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            return $th->getMessage();
+            toast($th->getMessage(), 'error');
+
+            return redirect()->back();
         }
     }
 
@@ -169,6 +177,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
+        toast('User deleted successfully!', 'success');
 
         return redirect()->route('backsite.user.index');
     }
