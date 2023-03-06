@@ -24,6 +24,22 @@
                             <a href="#">Role</a>
                         </x-slot>
                     </x-nav-link-parent>
+                    <x-nav-link-parent :href="'#'" :active="request()->is('backsite/master-data*')">
+                        <x-slot name="name">Master Data</x-slot>
+                        <x-slot name="children">
+                            <a href="#">Specialist</a>
+                            <a href="#">Consultation</a>
+                        </x-slot>
+                    </x-nav-link-parent>
+                    <x-nav-link-parent :href="'#'" :active="request()->is('backsite/operational*')">
+                        <x-slot name="name">Operational</x-slot>
+                        <x-slot name="children">
+                            <a href="#">Doctor</a>
+                            <a href="#">Patient</a>
+                            <a href="#">Appointment</a>
+                            <a href="#">Payment</a>
+                        </x-slot>
+                    </x-nav-link-parent>
                 </div>
             </div>
 
@@ -167,6 +183,22 @@
                     <a href="{{ route('backsite.user-type.index') }}">User Type</a>
                     <a href="#">Permission</a>
                     <a href="#">Role</a>
+                </x-slot>
+            </x-responsive-nav-link-parent>
+            <x-responsive-nav-link-parent :href="'#'" :active="request()->is('backsite/master-data*')">
+                <x-slot name="name">Master Data</x-slot>
+                <x-slot name="children">
+                    <a href="#">Specialist</a>
+                    <a href="#">Consultation</a>
+                </x-slot>
+            </x-responsive-nav-link-parent>
+            <x-responsive-nav-link-parent :href="'#'" :active="request()->is('backsite/operational*')">
+                <x-slot name="name">Operational</x-slot>
+                <x-slot name="children">
+                    <a href="#">Doctor</a>
+                    <a href="#">Patient</a>
+                    <a href="#">Appointment</a>
+                    <a href="#">Payment</a>
                 </x-slot>
             </x-responsive-nav-link-parent>
         </div>
