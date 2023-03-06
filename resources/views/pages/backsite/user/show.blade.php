@@ -39,7 +39,7 @@
                             <tr>
                                 <th class="border px-6 py-4 text-right">Photo</th>
                                 <td class="border px-6 py-4">
-                                    <img src="{{ Storage::disk('public')->url($user->user_detail->photo) }}"
+                                    <img src="{{ $user->user_detail->photo ? Storage::disk('public')->url($user->user_detail->photo) : asset('images/default_photo_user.jpg') }}"
                                         class="w-20" alt="user-photo">
                                 </td>
                             </tr>
