@@ -127,6 +127,9 @@ class ConsultationController extends Controller
      */
     public function destroy(Consultation $consultation)
     {
-        //
+        $consultation->delete();
+
+        toast('Consultation deleted successfully!', 'success');
+        return redirect()->route('backsite.consultation.index');
     }
 }
