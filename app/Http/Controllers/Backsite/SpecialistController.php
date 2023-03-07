@@ -18,7 +18,7 @@ class SpecialistController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $specialists = Specialist::query();
+            $specialists = Specialist::query()->orderBy('name');
 
             return datatables()
                 ->eloquent($specialists)
