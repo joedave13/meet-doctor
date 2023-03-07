@@ -24,8 +24,8 @@ class StoreDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'specialist_id' => ['required', 'integer'],
             'name' => ['required', 'string', 'max:255'],
+            'specialist_id' => ['required', 'integer', 'exists:specialists,id'],
             'fee' => ['required', 'integer'],
             'photo' => ['nullable', 'file', 'image']
         ];

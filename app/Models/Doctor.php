@@ -10,7 +10,7 @@ class Doctor extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['specialist_id', 'name', 'fee', 'picture'];
+    protected $fillable = ['specialist_id', 'name', 'fee', 'photo'];
 
     public function specialist()
     {

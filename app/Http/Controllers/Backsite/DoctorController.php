@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backsite\Doctor\StoreDoctorRequest;
 use App\Models\Doctor;
+use App\Models\Specialist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DoctorController extends Controller
 {
@@ -16,7 +19,7 @@ class DoctorController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $doctors = Doctor::with(['specialist.name'])->orderBy('name');
+            $doctors = Doctor::with(['specialist'])->orderBy('name');
 
             return datatables()
                 ->eloquent($doctors)
@@ -36,7 +39,9 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        $specialists = Specialist::all();
+
+        return view('pages.backsite.doctor.create', compact('specialists'));
     }
 
     /**
@@ -45,9 +50,29 @@ class DoctorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDoctorRequest $request)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_token', 'photo']);
+
+            if ($request->hasFile('photo')) {
+                $data['photo'] = $request->file('photo')->store('doctor/photo', 'public');
+            }
+
+            Doctor::query()->create($data);
+
+            DB::commit();
+
+            toast('Doctor created successfully!', 'success');
+            return redirect()->route('backsite.doctor.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
