@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backsite\SpecialistController;
 use App\Http\Controllers\Backsite\UserController;
 use App\Http\Controllers\Backsite\UserTypeController;
 use App\Http\Controllers\Frontsite\AppointmentController;
@@ -39,6 +40,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::prefix('management-access')->group(function () {
             Route::resource('user-type', UserTypeController::class)->only(['index']);
             Route::resource('user', UserController::class);
+        });
+
+        Route::prefix('master-data')->group(function () {
+            Route::resource('specialist', SpecialistController::class)->except(['show']);
         });
     });
     // End Backsite Routes
