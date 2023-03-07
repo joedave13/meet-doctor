@@ -21,7 +21,7 @@
                             <a href="{{ route('backsite.user.index') }}">User</a>
                             <a href="{{ route('backsite.user-type.index') }}">User Type</a>
                             <a href="{{ route('backsite.permission.index') }}">Permission</a>
-                            <a href="#">Role</a>
+                            <a href="{{ route('backsite.role.index') }}">Role</a>
                         </x-slot>
                     </x-nav-link-parent>
                     <x-nav-link-parent :href="'#'" :active="request()->is('backsite/master-data*')">
@@ -182,7 +182,7 @@
                     <a href="{{ route('backsite.user.index') }}">User</a>
                     <a href="{{ route('backsite.user-type.index') }}">User Type</a>
                     <a href="{{ route('backsite.permission.index') }}">Permission</a>
-                    <a href="#">Role</a>
+                    <a href="{{ route('backsite.role.index') }}">Role</a>
                 </x-slot>
             </x-responsive-nav-link-parent>
             <x-responsive-nav-link-parent :href="'#'" :active="request()->is('backsite/master-data*')">
