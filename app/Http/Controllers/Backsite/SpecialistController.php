@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backsite\Specialist\StoreSpecialistRequest;
+use App\Http\Requests\Backsite\Specialist\UpdateSpecialistRequest;
 use App\Models\Specialist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -85,9 +86,9 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Specialist $specialist)
     {
-        //
+        return view('pages.backsite.specialist.edit', compact('specialist'));
     }
 
     /**
@@ -97,9 +98,25 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSpecialistRequest $request, Specialist $specialist)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_method', '_token']);
+
+            $specialist->update($data);
+
+            DB::commit();
+
+            toast('Specialist updated successfully!', 'success');
+            return redirect()->route('backsite.specialist.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
