@@ -45,7 +45,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::resource('user-type', UserTypeController::class)->only(['index']);
             Route::resource('user', UserController::class);
             Route::resource('permission', PermissionController::class)->only(['index']);
-            Route::resource('role', RoleController::class);
+            Route::resource('role', RoleController::class)->except(['show']);
         });
 
         Route::prefix('master-data')->group(function () {

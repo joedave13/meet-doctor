@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backsite\Role\StoreRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -36,7 +38,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.backsite.role.create');
     }
 
     /**
@@ -45,9 +47,25 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_token']);
+
+            Role::query()->create($data);
+
+            DB::commit();
+
+            toast('Role created successfully!', 'success');
+            return redirect()->route('backsite.role.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
