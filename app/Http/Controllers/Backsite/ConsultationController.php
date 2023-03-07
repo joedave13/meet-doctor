@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backsite\Consultation\StoreConsultationRequest;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConsultationController extends Controller
 {
@@ -25,6 +27,7 @@ class ConsultationController extends Controller
                 ->addIndexColumn()
                 ->make();
         }
+
         return view('pages.backsite.consultation.index');
     }
 
@@ -35,7 +38,7 @@ class ConsultationController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.backsite.consultation.create');
     }
 
     /**
@@ -44,9 +47,25 @@ class ConsultationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreConsultationRequest $request)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_token']);
+
+            Consultation::query()->create($data);
+
+            DB::commit();
+
+            toast('Consultation created successfully!', 'success');
+            return redirect()->route('backsite.consultation.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
