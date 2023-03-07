@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backsite\Role\StoreRoleRequest;
+use App\Http\Requests\Backsite\Role\UpdateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -87,7 +88,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('pages.backsite.role.edit', compact('role'));
     }
 
     /**
@@ -97,9 +98,25 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_token', '_method']);
+
+            $role->update($data);
+
+            DB::commit();
+
+            toast('Role updated successfully!', 'success');
+            return redirect()->route('backsite.role.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
