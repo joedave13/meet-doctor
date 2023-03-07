@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backsite\Consultation\StoreConsultationRequest;
+use App\Http\Requests\Backsite\Consultation\UpdateConsultationRequest;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -87,7 +88,7 @@ class ConsultationController extends Controller
      */
     public function edit(Consultation $consultation)
     {
-        //
+        return view('pages.backsite.consultation.edit', compact('consultation'));
     }
 
     /**
@@ -97,9 +98,25 @@ class ConsultationController extends Controller
      * @param  \App\Models\Consultation  $consultation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Consultation $consultation)
+    public function update(UpdateConsultationRequest $request, Consultation $consultation)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_method', '_token']);
+
+            $consultation->update($data);
+
+            DB::commit();
+
+            toast('Consultation updated successfully!', 'success');
+            return redirect()->route('backsite.consultation.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
