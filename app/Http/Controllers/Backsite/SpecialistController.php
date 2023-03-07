@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Backsite\Specialist\StoreSpecialistRequest;
 use App\Models\Specialist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SpecialistController extends Controller
 {
@@ -36,7 +38,7 @@ class SpecialistController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.backsite.specialist.create');
     }
 
     /**
@@ -45,9 +47,25 @@ class SpecialistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSpecialistRequest $request)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_token']);
+
+            Specialist::query()->create($data);
+
+            DB::commit();
+
+            toast('Specialist created successfully!', 'success');
+            return redirect()->route('backsite.specialist.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
