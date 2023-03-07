@@ -20,7 +20,7 @@
                         <x-slot name="children">
                             <a href="{{ route('backsite.user.index') }}">User</a>
                             <a href="{{ route('backsite.user-type.index') }}">User Type</a>
-                            <a href="#">Permission</a>
+                            <a href="{{ route('backsite.permission.index') }}">Permission</a>
                             <a href="#">Role</a>
                         </x-slot>
                     </x-nav-link-parent>
@@ -181,7 +181,7 @@
                 <x-slot name="children">
                     <a href="{{ route('backsite.user.index') }}">User</a>
                     <a href="{{ route('backsite.user-type.index') }}">User Type</a>
-                    <a href="#">Permission</a>
+                    <a href="{{ route('backsite.permission.index') }}">Permission</a>
                     <a href="#">Role</a>
                 </x-slot>
             </x-responsive-nav-link-parent>
