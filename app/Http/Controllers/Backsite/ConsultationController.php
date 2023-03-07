@@ -76,7 +76,7 @@ class ConsultationController extends Controller
      */
     public function show(Consultation $consultation)
     {
-        //
+        return abort(404);
     }
 
     /**
