@@ -25,6 +25,10 @@
                                 <td class="border px-6 py-4">{{ $user->email }}</td>
                             </tr>
                             <tr>
+                                <th class="border px-6 py-4 text-right">User Type</th>
+                                <td class="border px-6 py-4">{{ $user->user_detail->user_type->name }}</td>
+                            </tr>
+                            <tr>
                                 <th class="border px-6 py-4 text-right">Age</th>
                                 <td class="border px-6 py-4">{{ $user->user_detail->age ?? '-' }}</td>
                             </tr>
