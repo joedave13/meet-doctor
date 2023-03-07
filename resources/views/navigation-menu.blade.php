@@ -28,7 +28,7 @@
                         <x-slot name="name">Master Data</x-slot>
                         <x-slot name="children">
                             <a href="{{ route('backsite.specialist.index') }}">Specialist</a>
-                            <a href="#">Consultation</a>
+                            <a href="{{ route('backsite.consultation.index') }}">Consultation</a>
                         </x-slot>
                     </x-nav-link-parent>
                     <x-nav-link-parent :href="'#'" :active="request()->is('backsite/operational*')">
@@ -189,7 +189,7 @@
                 <x-slot name="name">Master Data</x-slot>
                 <x-slot name="children">
                     <a href="{{ route('backsite.specialist.index') }}">Specialist</a>
-                    <a href="#">Consultation</a>
+                    <a href="{{ route('backsite.consultation.index') }}">Consultation</a>
                 </x-slot>
             </x-responsive-nav-link-parent>
             <x-responsive-nav-link-parent :href="'#'" :active="request()->is('backsite/operational*')">
