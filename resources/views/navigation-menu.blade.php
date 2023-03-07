@@ -34,7 +34,7 @@
                     <x-nav-link-parent :href="'#'" :active="request()->is('backsite/operational*')">
                         <x-slot name="name">Operational</x-slot>
                         <x-slot name="children">
-                            <a href="#">Doctor</a>
+                            <a href="{{ route('backsite.doctor.index') }}">Doctor</a>
                             <a href="#">Patient</a>
                             <a href="#">Appointment</a>
                             <a href="#">Payment</a>
@@ -195,7 +195,7 @@
             <x-responsive-nav-link-parent :href="'#'" :active="request()->is('backsite/operational*')">
                 <x-slot name="name">Operational</x-slot>
                 <x-slot name="children">
-                    <a href="#">Doctor</a>
+                    <a href="{{ route('backsite.doctor.index') }}">Doctor</a>
                     <a href="#">Patient</a>
                     <a href="#">Appointment</a>
                     <a href="#">Payment</a>
