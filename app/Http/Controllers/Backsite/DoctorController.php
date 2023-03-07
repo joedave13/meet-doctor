@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backsite\Doctor\StoreDoctorRequest;
+use App\Http\Requests\Backsite\Doctor\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\Specialist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -94,7 +96,9 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        $specialists = Specialist::all();
+
+        return view('pages.backsite.doctor.edit', compact('doctor', 'specialists'));
     }
 
     /**
@@ -104,9 +108,33 @@ class DoctorController extends Controller
      * @param  \App\Models\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->except(['_token', '_method', 'photo']);
+
+            if ($request->hasFile('photo')) {
+                if ($doctor->photo && Storage::disk('public')->exists($doctor->photo)) {
+                    Storage::disk('public')->delete($doctor->photo);
+                }
+
+                $data['photo'] = $request->file('photo')->store('doctor/photo', 'public');
+            }
+
+            $doctor->update($data);
+
+            DB::commit();
+
+            toast('Doctor updated successfully!', 'success');
+            return redirect()->route('backsite.doctor.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            toast($th->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**
