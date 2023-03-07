@@ -15,7 +15,17 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        //
+        if (request()->ajax()) {
+            $consultations = Consultation::query()->orderBy('name');
+
+            return datatables()
+                ->eloquent($consultations)
+                ->addColumn('action', 'pages.backsite.consultation.table-action')
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make();
+        }
+        return view('pages.backsite.consultation.index');
     }
 
     /**
