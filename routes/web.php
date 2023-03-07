@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backsite\ConsultationController;
 use App\Http\Controllers\Backsite\DoctorController;
+use App\Http\Controllers\Backsite\PatientController;
 use App\Http\Controllers\Backsite\PermissionController;
 use App\Http\Controllers\Backsite\RoleController;
 use App\Http\Controllers\Backsite\SpecialistController;
@@ -55,6 +56,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         Route::prefix('operational')->group(function () {
             Route::resource('doctor', DoctorController::class);
+            Route::resource('patient', PatientController::class)->only(['index', 'show']);
         });
     });
     // End Backsite Routes
