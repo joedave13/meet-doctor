@@ -83,7 +83,7 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        //
+        return view('pages.backsite.doctor.show', compact('doctor'));
     }
 
     /**
