@@ -40,7 +40,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -51,7 +51,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -71,9 +71,9 @@ class PatientController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $patient)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -83,9 +83,9 @@ class PatientController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $patient)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -94,8 +94,8 @@ class PatientController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $patient)
     {
-        //
+        return abort(404);
     }
 }
