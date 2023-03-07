@@ -60,9 +60,9 @@ class PatientController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $patient)
     {
-        //
+        return view('pages.backsite.patient.show', compact('patient'));
     }
 
     /**
