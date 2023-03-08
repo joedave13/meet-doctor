@@ -44,7 +44,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -55,7 +55,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -77,7 +77,7 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -89,7 +89,7 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -100,6 +100,6 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //
+        return abort(404);
     }
 }
