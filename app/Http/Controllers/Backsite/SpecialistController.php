@@ -8,6 +8,8 @@ use App\Http\Requests\Backsite\Specialist\UpdateSpecialistRequest;
 use App\Models\Specialist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class SpecialistController extends Controller
 {
@@ -18,6 +20,8 @@ class SpecialistController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('specialist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (request()->ajax()) {
             $specialists = Specialist::query()->orderBy('name');
 
@@ -39,6 +43,8 @@ class SpecialistController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('specialist_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.specialist.create');
     }
 
@@ -50,6 +56,8 @@ class SpecialistController extends Controller
      */
     public function store(StoreSpecialistRequest $request)
     {
+        abort_if(Gate::denies('specialist_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -88,6 +96,8 @@ class SpecialistController extends Controller
      */
     public function edit(Specialist $specialist)
     {
+        abort_if(Gate::denies('specialist_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.specialist.edit', compact('specialist'));
     }
 
@@ -100,6 +110,8 @@ class SpecialistController extends Controller
      */
     public function update(UpdateSpecialistRequest $request, Specialist $specialist)
     {
+        abort_if(Gate::denies('specialist_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -127,6 +139,8 @@ class SpecialistController extends Controller
      */
     public function destroy(Specialist $specialist)
     {
+        abort_if(Gate::denies('specialist_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $specialist->delete();
 
         toast('Specialist deleted successfully!', 'success');

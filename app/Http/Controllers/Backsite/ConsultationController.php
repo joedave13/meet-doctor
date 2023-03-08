@@ -8,6 +8,8 @@ use App\Http\Requests\Backsite\Consultation\UpdateConsultationRequest;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ConsultationController extends Controller
 {
@@ -18,6 +20,8 @@ class ConsultationController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('consultation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (request()->ajax()) {
             $consultations = Consultation::query()->orderBy('name');
 
@@ -39,6 +43,8 @@ class ConsultationController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('consultation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.consultation.create');
     }
 
@@ -50,6 +56,8 @@ class ConsultationController extends Controller
      */
     public function store(StoreConsultationRequest $request)
     {
+        abort_if(Gate::denies('consultation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -88,6 +96,8 @@ class ConsultationController extends Controller
      */
     public function edit(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.consultation.edit', compact('consultation'));
     }
 
@@ -100,6 +110,8 @@ class ConsultationController extends Controller
      */
     public function update(UpdateConsultationRequest $request, Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -127,6 +139,8 @@ class ConsultationController extends Controller
      */
     public function destroy(Consultation $consultation)
     {
+        abort_if(Gate::denies('consultation_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $consultation->delete();
 
         toast('Consultation deleted successfully!', 'success');
