@@ -25,7 +25,7 @@ class StoreAppointmentRequest extends FormRequest
     {
         return [
             'doctor_id' => ['required', 'integer', 'exists:doctors,id'],
-            'consultation_id' => ['required', 'integer', 'exists:specialists,id'],
+            'consultation_id' => ['required', 'integer', 'exists:consultations,id'],
             'date' => ['required', 'date'],
             'time' => ['required']
         ];
