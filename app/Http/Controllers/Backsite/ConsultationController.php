@@ -28,7 +28,23 @@ class ConsultationController extends Controller
             return datatables()
                 ->eloquent($consultations)
                 ->addColumn('action', 'pages.backsite.consultation.table-action')
-                ->rawColumns(['action'])
+                ->editColumn('level', function ($item) {
+                    switch ($item->level) {
+                        case 1:
+                            return '<span class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Low</span>';
+                            break;
+                        case 2:
+                            return '<span class="bg-yellow-200 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Medium</span>';
+                            break;
+                        case 3:
+                            return '<span class="bg-red-500 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">High</span>';
+                            break;
+                        default:
+                            return '<span class="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Unknown</span>';
+                            break;
+                    }
+                })
+                ->rawColumns(['action', 'level'])
                 ->addIndexColumn()
                 ->make();
         }
