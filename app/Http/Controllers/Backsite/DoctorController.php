@@ -9,7 +9,9 @@ use App\Models\Doctor;
 use App\Models\Specialist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class DoctorController extends Controller
 {
@@ -20,6 +22,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('doctor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (request()->ajax()) {
             $doctors = Doctor::with(['specialist'])->orderBy('name');
 
@@ -41,6 +45,8 @@ class DoctorController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $specialists = Specialist::all();
 
         return view('pages.backsite.doctor.create', compact('specialists'));
@@ -54,6 +60,8 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
+        abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -85,6 +93,8 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
+        abort_if(Gate::denies('doctor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.doctor.show', compact('doctor'));
     }
 
@@ -96,6 +106,8 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
+        abort_if(Gate::denies('doctor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $specialists = Specialist::all();
 
         return view('pages.backsite.doctor.edit', compact('doctor', 'specialists'));
@@ -110,6 +122,8 @@ class DoctorController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
+        abort_if(Gate::denies('doctor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -145,6 +159,8 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
+        abort_if(Gate::denies('doctor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $doctor->delete();
 
         toast('Doctor deleted successfully!', 'success');

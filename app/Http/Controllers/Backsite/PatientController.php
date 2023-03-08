@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backsite;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class PatientController extends Controller
 {
@@ -15,6 +17,8 @@ class PatientController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('patient_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (request()->ajax()) {
             $patients = User::with(['user_detail', 'user_detail.user_type'])
                 ->whereHas('user_detail', function ($query) {
