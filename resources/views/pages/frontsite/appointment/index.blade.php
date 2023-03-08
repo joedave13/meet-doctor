@@ -59,28 +59,33 @@
                 New Appointment
             </h2>
 
-            <form action="" class="mt-8 space-y-5">
+            <form action="{{ route('appointment.store') }}" method="POST" class="mt-8 space-y-5">
+                @csrf
+
+                <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+
                 <label class="block">
-                    <select name="topic" id="topic"
+                    <select name="consultation_id" id="consultation_id"
                         class="block w-full rounded-full py-4 text-[#1E2B4F] font-medium px-7 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
                         placeholder="Topik Konsultasi">
-                        <option disabled selected class="hidden">
-                            Topik Konsultasi
+                        <option value="" hidden>- Pilih Topik Konsultasi -</option>
+                        @foreach ($consultations as $consultation)
+                        <option value="{{ $consultation->id }}" {{ $consultation->id == old('consultation_id') ?
+                            'selected' : '' }}>
+                            {{ $consultation->name }}
                         </option>
-                        <option value="Jantung Sesak">Jantung Sesak</option>
-                        <option value="Tekanan Darah Tinggi">
-                            Tekanan Darah Tinggi
-                        </option>
-                        <option value="Gangguan Irama Jantung">
-                            Gangguan Irama Jantung
-                        </option>
+                        @endforeach
                     </select>
                 </label>
+
+                @error('consultation_id')
+                <small class="mt-0" style="color: rgb(220 38 38);">{{ $message }}</small>
+                @enderror
 
                 <label class="relative block">
                     <input type="text" id="date" name="date"
                         class="block w-full rounded-full py-4 text-[#1E2B4F] font-medium placeholder:text-[#AFAEC3] placeholder:font-normal px-7 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
-                        placeholder="Choose Date" />
+                        placeholder="Choose Date" value="{{ old('date') }}" />
                     <span class="absolute top-0 right-[11px] bottom-1/2 translate-y-[58%]"><svg width="24" height="24"
                             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -96,10 +101,14 @@
                     </span>
                 </label>
 
+                @error('date')
+                <small class="mt-0" style="color: rgb(220 38 38);">{{ $message }}</small>
+                @enderror
+
                 <label class="relative block">
                     <input type="text" id="time" name="time"
                         class="block w-full rounded-full py-4 text-[#1E2B4F] font-medium placeholder:text-[#AFAEC3] placeholder:font-normal px-7 border border-[#d4d4d4] focus:outline-none focus:border-[#0D63F3]"
-                        placeholder="Choose Time" />
+                        placeholder="Choose Time" value="{{ old('time') }}" />
                     <span class="absolute top-0 right-[11px] bottom-1/2 translate-y-[58%]"><svg width="24" height="24"
                             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -111,9 +120,13 @@
                     </span>
                 </label>
 
+                @error('time')
+                <small class="mt-0" style="color: rgb(220 38 38);">{{ $message }}</small>
+                @enderror
+
                 <div class="grid">
-                    <a href="subject-consultation-payment.html"
-                        class="bg-[#0D63F3] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Continue</a>
+                    <button type="submit"
+                        class="bg-[#0D63F3] rounded-full mt-5 text-white text-lg font-medium px-10 py-3 text-center">Continue</button>
                 </div>
             </form>
         </div>

@@ -10,7 +10,7 @@ class Payment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['appointment_id', 'consultation_fee', 'doctor_fee', 'hospital_fee', 'vat', 'total'];
+    protected $fillable = ['code', 'appointment_id', 'consultation_fee', 'doctor_fee', 'hospital_fee', 'vat', 'total', 'payment_method'];
 
     public function appointment()
     {

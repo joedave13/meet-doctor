@@ -1,4 +1,4 @@
-@extends('layouts.default', ['Subjek Consultation Payment'])
+@extends('layouts.default', ['title' => 'Subjek Consultation Payment'])
 
 @section('content')
 <!-- Content -->
@@ -9,15 +9,15 @@
             <!-- Doctor Information -->
             <div class="flex flex-wrap items-center space-x-5">
                 <div class="flex-shrink-0">
-                    <img src="{{ asset('assets/frontsite/images/doctor-1.png') }}"
+                    <img src="{{ $appointment->doctor->photo ? Storage::url($appointment->doctor->photo) : asset('images/default_photo_user.jpg') }}"
                         class="w-20 h-20 rounded-full bg-center object-cover object-top" alt="Doctor 1" />
                 </div>
 
                 <div class="flex-1 space-y-1">
                     <div class="text-[#1E2B4F] text-lg font-semibold">
-                        Dr. Galih Pratama
+                        {{ $appointment->doctor->name }}
                     </div>
-                    <div class="text-[#AFAEC3]">Cardiologist</div>
+                    <div class="text-[#AFAEC3]">{{ $appointment->doctor->specialist->name }}</div>
 
                     <!--
                   Icon when mobile is show.
@@ -109,22 +109,26 @@
                 <h5 class="text-[#1E2B4F] text-lg font-semibold">Appointment</h5>
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Kebutuhan konsultasi</div>
-                    <div class="text-[#1E2B4F] font-medium">Jantung sesak</div>
+                    <div class="text-[#1E2B4F] font-medium">{{ $appointment->consultation->name }}</div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Level</div>
-                    <div class="text-[#1E2B4F] font-medium">Medium</div>
+                    <div class="text-[#1E2B4F] font-medium">{{ $appointment->consultation->level }}</div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Dijadwalkan pada</div>
-                    <div class="text-[#1E2B4F] font-medium">12 Januari 2022</div>
+                    <div class="text-[#1E2B4F] font-medium">
+                        {{ \Carbon\Carbon::parse($appointment->date)->format('d M Y') }}
+                    </div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Waktu</div>
-                    <div class="text-[#1E2B4F] font-medium">15:30 PM</div>
+                    <div class="text-[#1E2B4F] font-medium">
+                        {{ \Carbon\Carbon::parse($appointment->time)->toTimeString() }}
+                    </div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
@@ -140,27 +144,32 @@
                 </h5>
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Biaya konsultasi</div>
-                    <div class="text-[#1E2B4F] font-medium">$5,000</div>
+                    <div class="text-[#1E2B4F] font-medium">$ {{ $appointment->consultation->fee }}</div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Fee dokter</div>
-                    <div class="text-[#1E2B4F] font-medium">$200</div>
+                    <div class="text-[#1E2B4F] font-medium">$ {{ $appointment->doctor->fee }}</div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Fee hospital</div>
-                    <div class="text-[#1E2B4F] font-medium">$10</div>
+                    <div class="text-[#1E2B4F] font-medium">$ 10</div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
-                    <div class="text-[#AFAEC3] font-medium">VAT 20%</div>
-                    <div class="text-[#1E2B4F] font-medium">$372</div>
+                    <div class="text-[#AFAEC3] font-medium">VAT 10%</div>
+                    <div class="text-[#1E2B4F] font-medium">
+                        $ {{ ($appointment->consultation->fee + $appointment->doctor->fee + 10) * 0.1 }}
+                    </div>
                 </div>
 
                 <div class="flex items-center justify-between mt-5">
                     <div class="text-[#AFAEC3] font-medium">Grand total</div>
-                    <div class="text-[#2AB49B] font-semibold">$6,500</div>
+                    <div class="text-[#2AB49B] font-semibold">
+                        $ {{ ($appointment->consultation->fee + $appointment->doctor->fee + 10 +
+                        (($appointment->consultation->fee + $appointment->doctor->fee + 10) * 0.1)) }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -171,11 +180,14 @@
                 Choose Your <br />
                 Payment Method
             </h3>
-            <form action="" x-data="{ payment: '' }" class="mt-8">
+            <form action="{{ route('payment.store', $appointment->id) }}" method="POST" x-data="{ payment: '' }"
+                class="mt-8">
+                @csrf
+
                 <!-- List Payment -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-5">
                     <div class="relative">
-                        <input type="radio" name="payment" x-model="payment" value="master-card" id="master-card"
+                        <input type="radio" name="payment_method" x-model="payment" value="Master Card" id="master-card"
                             class="sr-only peer" />
                         <label
                             class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
@@ -186,7 +198,7 @@
                     </div>
 
                     <div class="relative">
-                        <input type="radio" name="payment" x-model="payment" value="visa" id="visa"
+                        <input type="radio" name="payment_method" x-model="payment" value="Visa" id="visa"
                             class="sr-only peer" />
                         <label
                             class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
@@ -197,7 +209,7 @@
                     </div>
 
                     <div class="relative">
-                        <input type="radio" name="payment" x-model="payment" value="cirrus" id="cirrus"
+                        <input type="radio" name="payment_method" x-model="payment" value="Cirrus" id="cirrus"
                             class="sr-only peer" />
                         <label
                             class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
@@ -208,7 +220,7 @@
                     </div>
 
                     <div class="relative">
-                        <input type="radio" name="payment" x-model="payment" value="mewallet" id="mewallet"
+                        <input type="radio" name="payment_method" x-model="payment" value="MeWallet" id="mewallet"
                             class="sr-only peer" />
                         <label
                             class="flex flex-col justify-center items-center bg-white border-[#EDEDED] cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-[#0D63F3] peer-checked:ring-2 peer-checked:border-transparent rounded-3xl border-2 p-7"
@@ -224,10 +236,10 @@
                     <!--
                   button when payment is filled.
                 -->
-                    <a href="booking-success.html" class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center"
+                    <button type="submit" class="bg-[#0D63F3] text-white px-10 py-3 rounded-full text-center"
                         x-show="payment.length">
                         Pay Now
-                    </a>
+                    </button>
 
                     <!--
                   button when payment is empty.

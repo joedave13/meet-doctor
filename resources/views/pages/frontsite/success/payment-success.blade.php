@@ -13,8 +13,8 @@
                 <br />
                 mendapatkan konsultasi yang terbaik
             </p>
-            <a href="../../index.html" class="inline-block mt-10 bg-[#0D63F3] text-white rounded-full px-14 py-3">
-                My Dashboard
+            <a href="/" class="inline-block mt-10 bg-[#0D63F3] text-white rounded-full px-14 py-3">
+                Home
             </a>
         </div>
     </div>

@@ -18,6 +18,8 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
+
     <!-- Header -->
     @include('includes.frontsite.navbar')
     <!-- End Header -->

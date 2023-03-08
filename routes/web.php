@@ -31,8 +31,11 @@ Route::view('/register-success', 'pages.frontsite.success.register-success');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/appointment/{doctor}', [AppointmentController::class, 'index'])->name('appointment');
-    Route::get('/payment', [PaymentController::class, 'index']);
-    Route::view('/payment-success', 'pages.frontsite.success.payment-success');
+    Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+
+    Route::get('/payment/{appointment}', [PaymentController::class, 'index'])->name('payment');
+    Route::post('/payment/{appointment}', [PaymentController::class, 'store'])->name('payment.store');
+    Route::view('/payment-success', 'pages.frontsite.success.payment-success')->name('payment.success');
 });
 // End Frontsite Routes
 
