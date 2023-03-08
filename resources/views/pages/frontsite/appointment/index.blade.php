@@ -10,12 +10,12 @@
     <div class="lg:max-w-7xl lg:flex items-center mx-auto px-4 lg:px-14 pt-6 py-20 lg:py-24 gap-x-24">
         <!-- Detail Doctor  -->
         <div class="lg:w-5/12 lg:border-r h-72 lg:h-[30rem] flex flex-col items-center justify-center text-center">
-            <img src="{{ asset('assets/frontsite/images/doctor-1.png') }}"
+            <img src="{{ $doctor->photo ? Storage::url($doctor->photo) : asset('images/default_photo_user.jpg') }}"
                 class="inline-block w-32 h-32 rounded-full bg-center object-cover object-top" alt="doctor-1" />
             <div class="text-[#1E2B4F] text-lg font-semibold mt-4">
-                Dr. Galih Pratama
+                {{ $doctor->name }}
             </div>
-            <div class="text-[#AFAEC3] mt-1">Cardiologist</div>
+            <div class="text-[#AFAEC3] mt-1">{{ $doctor->specialist->name }}</div>
             <div class="flex justify-center items-center gap-x-2 mt-4">
                 <div class="flex items-center gap-2">
                     <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">

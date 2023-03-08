@@ -10,6 +10,6 @@ class AppointmentController extends Controller
 {
     public function index(Doctor $doctor)
     {
-        return view('pages.frontsite.appointment.index');
+        return view('pages.frontsite.appointment.index', compact('doctor'));
     }
 }
