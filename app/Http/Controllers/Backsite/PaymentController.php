@@ -38,7 +38,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -49,7 +49,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -71,7 +71,7 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -83,7 +83,7 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -94,6 +94,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        return abort(404);
     }
 }
