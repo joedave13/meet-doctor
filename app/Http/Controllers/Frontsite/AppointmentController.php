@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public function index($id)
+    public function index(Doctor $doctor)
     {
         return view('pages.frontsite.appointment.index');
     }

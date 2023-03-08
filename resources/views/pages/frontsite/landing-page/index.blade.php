@@ -97,35 +97,13 @@
 
             <!-- Card -->
             <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 md:gap-10 lg:gap-12 mt-10">
+                @foreach ($specialists as $specialist)
                 <a href="#"
                     class="bg-white py-6 px-5 rounded-2xl transition hover:ring-offset-2 hover:ring-2 hover:ring-[#0D63F3]">
-                    <h5 class="text-[#1E2B4F] text-lg font-semibold">Dermatology</h5>
-                    <p class="text-[#AFAEC3] mt-1">143 doctors</p>
+                    <h5 class="text-[#1E2B4F] text-lg font-semibold">{{ $specialist->name }}</h5>
+                    <p class="text-[#AFAEC3] mt-1">{{ $specialist->doctors_count }} doctors</p>
                 </a>
-
-                <a href="#"
-                    class="bg-white py-6 px-5 rounded-2xl transition hover:ring-offset-2 hover:ring-2 hover:ring-[#0D63F3]">
-                    <h5 class="text-[#1E2B4F] text-lg font-semibold">Neurology</h5>
-                    <p class="text-[#AFAEC3] mt-1">22 doctors</p>
-                </a>
-
-                <a href="#"
-                    class="bg-white py-6 px-5 rounded-2xl transition hover:ring-offset-2 hover:ring-2 hover:ring-[#0D63F3]">
-                    <h5 class="text-[#1E2B4F] text-lg font-semibold">Dentist</h5>
-                    <p class="text-[#AFAEC3] mt-1">74 doctors</p>
-                </a>
-
-                <a href="#"
-                    class="bg-white py-6 px-5 rounded-2xl transition hover:ring-offset-2 hover:ring-2 hover:ring-[#0D63F3]">
-                    <h5 class="text-[#1E2B4F] text-lg font-semibold">Allergists</h5>
-                    <p class="text-[#AFAEC3] mt-1">53 doctors</p>
-                </a>
-
-                <a href="#"
-                    class="bg-white py-6 px-5 rounded-2xl transition hover:ring-offset-2 hover:ring-2 hover:ring-[#0D63F3]">
-                    <h5 class="text-[#1E2B4F] text-lg font-semibold">Cardiologists</h5>
-                    <p class="text-[#AFAEC3] mt-1">794 doctors</p>
-                </a>
+                @endforeach
             </div>
             <!-- End Card -->
         </div>
@@ -140,9 +118,10 @@
 
             <!-- Card -->
             <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 lg:gap-10 mt-10">
-                <a href="{{ route('appointment', 1) }}" class="group">
+                @foreach ($doctors as $doctor)
+                <a href="{{ route('appointment', $doctor->id) }}" class="group">
                     <div class="relative z-10 w-full h-[350px] rounded-2xl overflow-hidden">
-                        <img src="{{ asset('assets/frontsite/images/doctor-1.png') }}"
+                        <img src="{{ $doctor->photo ? Storage::url($doctor->photo) : asset('images/default_photo_user.jpg') }}"
                             class="w-full h-full bg-center bg-no-repeat object-cover object-center" alt="Doctor 1">
                         <div
                             class="opacity-0 group-hover:opacity-100 transition-all ease-in absolute inset-0 bg-[#0D63F3] bg-opacity-70 flex justify-center items-center">
@@ -151,8 +130,8 @@
                     </div>
                     <div class="flex items-center justify-between mt-5">
                         <div>
-                            <div class="text-[#1E2B4F] text-lg font-semibold">Dr. Galih Pratama</div>
-                            <div class="text-[#AFAEC3] mt-1">Cardiologist</div>
+                            <div class="text-[#1E2B4F] text-lg font-semibold">{{ $doctor->name }}</div>
+                            <div class="text-[#AFAEC3] mt-1">{{ $doctor->specialist->name }}</div>
                         </div>
                         <div class="flex items-center space-x-2">
                             <img src="{{ asset('assets/frontsite/images/star.svg') }}" alt="Star">
@@ -160,69 +139,7 @@
                         </div>
                     </div>
                 </a>
-
-                <a href="{{ route('appointment', 2) }}" class="group">
-                    <div class="relative z-10 w-full h-[350px] rounded-2xl overflow-hidden">
-                        <img src="{{ asset('assets/frontsite/images/doctor-2.png') }}"
-                            class="w-full h-full bg-center bg-no-repeat object-cover object-center" alt="Doctor 1">
-                        <div
-                            class="opacity-0 group-hover:opacity-100 transition-all ease-in absolute inset-0 bg-[#0D63F3] bg-opacity-70 flex justify-center items-center">
-                            <span class="text-[#0D63F3] font-medium bg-white rounded-full px-8 py-3">Book Now</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between mt-5">
-                        <div>
-                            <div class="text-[#1E2B4F] text-lg font-semibold">Dr. Anne Hulli</div>
-                            <div class="text-[#AFAEC3] mt-1">Dentist</div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <img src="{{ asset('assets/frontsite/images/star.svg') }}" alt="Star">
-                            <span class="block text-[#1E2B4F] font-medium">4.8</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="{{ route('appointment', 3) }}" class="group">
-                    <div class="relative z-10 w-full h-[350px] rounded-2xl overflow-hidden">
-                        <img src="{{ asset('assets/frontsite/images/doctor-3.png') }}"
-                            class="w-full h-full bg-center bg-no-repeat object-cover object-center" alt="Doctor 1">
-                        <div
-                            class="opacity-0 group-hover:opacity-100 transition-all ease-in absolute inset-0 bg-[#0D63F3] bg-opacity-70 flex justify-center items-center">
-                            <span class="text-[#0D63F3] font-medium bg-white rounded-full px-8 py-3">Book Now</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between mt-5">
-                        <div>
-                            <div class="text-[#1E2B4F] text-lg font-semibold">Dr. Masayoshi</div>
-                            <div class="text-[#AFAEC3] mt-1">Neurologist</div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <img src="{{ asset('assets/frontsite/images/star.svg') }}" alt="Star">
-                            <span class="block text-[#1E2B4F] font-medium">4.5</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="{{ route('appointment', 4) }}" class="group">
-                    <div class="relative z-10 w-full h-[350px] rounded-2xl overflow-hidden">
-                        <img src="{{ asset('assets/frontsite/images/doctor-4.png') }}"
-                            class="w-full h-full bg-center bg-no-repeat object-cover object-center" alt="Doctor 1">
-                        <div
-                            class="opacity-0 group-hover:opacity-100 transition-all ease-in absolute inset-0 bg-[#0D63F3] bg-opacity-70 flex justify-center items-center">
-                            <span class="text-[#0D63F3] font-medium bg-white rounded-full px-8 py-3">Book Now</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between mt-5">
-                        <div>
-                            <div class="text-[#1E2B4F] text-lg font-semibold">Dr. Shin Tai</div>
-                            <div class="text-[#AFAEC3] mt-1">Dermatology</div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <img src="{{ asset('assets/frontsite/images/star.svg') }}" alt="Star">
-                            <span class="block text-[#1E2B4F] font-medium">4.5</span>
-                        </div>
-                    </div>
-                </a>
+                @endforeach
             </div>
             <!-- End Card -->
         </div>
