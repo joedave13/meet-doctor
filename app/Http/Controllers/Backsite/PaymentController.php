@@ -60,7 +60,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        //
+        return view('pages.backsite.payment.show', compact('payment'));
     }
 
     /**
