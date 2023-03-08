@@ -8,6 +8,8 @@ use App\Http\Requests\Backsite\Role\UpdateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
 {
@@ -18,6 +20,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (request()->ajax()) {
             $roles = Role::query()->orderBy('name');
 
@@ -39,6 +43,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.role.create');
     }
 
@@ -50,6 +56,8 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
+        abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -88,6 +96,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.role.edit', compact('role'));
     }
 
@@ -100,6 +110,8 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
+        abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -127,6 +139,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $role->delete();
 
         toast('Role deleted successfully!', 'success');

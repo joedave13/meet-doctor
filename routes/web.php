@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backsite\ConsultationController;
+use App\Http\Controllers\Backsite\DashboardController;
 use App\Http\Controllers\Backsite\DoctorController;
 use App\Http\Controllers\Backsite\PatientController;
 use App\Http\Controllers\Backsite\PermissionController;
@@ -36,9 +37,7 @@ Route::middleware(['auth'])->group(function () {
 // End Frontsite Routes
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Backsite Routes
     Route::prefix('backsite')->name('backsite.')->middleware(['auth'])->group(function () {

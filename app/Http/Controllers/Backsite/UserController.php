@@ -11,8 +11,10 @@ use App\Models\UserDetail;
 use App\Models\UserType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -23,6 +25,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (request()->ajax()) {
             $users = User::with(['user_detail', 'user_detail.user_type', 'roles'])->orderBy('name', 'asc');
 
@@ -47,6 +51,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $userTypes = UserType::all();
         $roles = Role::all();
 
@@ -61,6 +67,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -103,6 +111,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.user.show', compact('user'));
     }
 
@@ -114,6 +124,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $userTypes = UserType::all();
         $roles = Role::all();
 
@@ -129,6 +141,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DB::beginTransaction();
 
         try {
@@ -176,6 +190,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $user->delete();
 
         toast('User deleted successfully!', 'success');
