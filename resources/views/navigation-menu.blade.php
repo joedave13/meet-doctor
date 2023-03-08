@@ -37,7 +37,7 @@
                             <a href="{{ route('backsite.doctor.index') }}">Doctor</a>
                             <a href="{{ route('backsite.patient.index') }}">Patient</a>
                             <a href="{{ route('backsite.appointment.index') }}">Appointment</a>
-                            <a href="#">Payment</a>
+                            <a href="{{ route('backsite.payment.index') }}">Payment</a>
                         </x-slot>
                     </x-nav-link-parent>
                 </div>
@@ -198,7 +198,7 @@
                     <a href="{{ route('backsite.doctor.index') }}">Doctor</a>
                     <a href="{{ route('backsite.patient.index') }}">Patient</a>
                     <a href="{{ route('backsite.appointment.index') }}">Appointment</a>
-                    <a href="#">Payment</a>
+                    <a href="{{ route('backsite.payment.index') }}">Payment</a>
                 </x-slot>
             </x-responsive-nav-link-parent>
         </div>
