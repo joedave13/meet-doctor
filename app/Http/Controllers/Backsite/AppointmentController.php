@@ -66,7 +66,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        return view('pages.backsite.appointment.show', compact('appointment'));
     }
 
     /**
