@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backsite\AppointmentController as BacksiteAppointmentController;
 use App\Http\Controllers\Backsite\ConsultationController;
 use App\Http\Controllers\Backsite\DashboardController;
 use App\Http\Controllers\Backsite\DoctorController;
@@ -59,6 +60,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::prefix('operational')->group(function () {
             Route::resource('doctor', DoctorController::class);
             Route::resource('patient', PatientController::class)->only(['index', 'show']);
+            Route::resource('appointment', BacksiteAppointmentController::class)->only(['index', 'show']);
         });
     });
     // End Backsite Routes

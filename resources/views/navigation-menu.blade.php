@@ -36,7 +36,7 @@
                         <x-slot name="children">
                             <a href="{{ route('backsite.doctor.index') }}">Doctor</a>
                             <a href="{{ route('backsite.patient.index') }}">Patient</a>
-                            <a href="#">Appointment</a>
+                            <a href="{{ route('backsite.appointment.index') }}">Appointment</a>
                             <a href="#">Payment</a>
                         </x-slot>
                     </x-nav-link-parent>
@@ -197,7 +197,7 @@
                 <x-slot name="children">
                     <a href="{{ route('backsite.doctor.index') }}">Doctor</a>
                     <a href="{{ route('backsite.patient.index') }}">Patient</a>
-                    <a href="#">Appointment</a>
+                    <a href="{{ route('backsite.appointment.index') }}">Appointment</a>
                     <a href="#">Payment</a>
                 </x-slot>
             </x-responsive-nav-link-parent>
