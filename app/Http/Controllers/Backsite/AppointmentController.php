@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class AppointmentController extends Controller
 {
@@ -16,6 +18,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if (request()->ajax()) {
             $appointments = Appointment::with(['user', 'consultation'])->latest();
 
@@ -66,6 +70,8 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
+        abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('pages.backsite.appointment.show', compact('appointment'));
     }
 
